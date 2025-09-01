@@ -117,8 +117,8 @@ describe("Version Utility", () => {
     it("should return current expected version", () => {
       const version = getVersion();
 
-      // Based on package.json, should be 1.0.0 (production release)
-      expect(version).toBe("1.0.0");
+      // Based on package.json, should be 0.3.0 (development release)
+      expect(version).toBe("0.3.0");
     });
   });
 });
