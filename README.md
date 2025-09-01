@@ -6,7 +6,7 @@
 
 ```bash
 $ proxmox-mpc                           # Launch interactive console
-🔧 Proxmox Infrastructure Console v1.0.0
+🔧 Proxmox Infrastructure Console v0.3.0
 Welcome! Type /help for commands or /init to get started.
 
 proxmox-mpc> /init                      # Initialize project workspace
