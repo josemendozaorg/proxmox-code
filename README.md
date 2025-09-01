@@ -43,9 +43,9 @@ proxmox-mpc> /apply                     # Deploy to server
 
 ## 🚀 Current Status
 
-**🎉 v1.0.0 Production Release** - Interactive Infrastructure Console Ready!
+**🚧 v0.3.0 Development Release** - Interactive CLI Tool in Development
 
-### ✅ **PRODUCTION READY** (100% - All 7 phases complete)
+### ✅ **DEVELOPMENT VERSION** (Core functionality implemented, not production-ready)
 
 - **Foundation & Core Infrastructure** - Complete TypeScript/Node.js project with 96.8% test success rate
 - **Database & State Management** - Full Prisma ORM integration with SQLite/PostgreSQL
