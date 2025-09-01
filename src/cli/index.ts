@@ -6,7 +6,8 @@
 
 import { Command } from 'commander';
 
-import { ProxmoxClient, loadProxmoxConfig, validateConfig, sanitizeConfig } from '../api';
+import { ProxmoxClient } from '../api';
+import { loadProxmoxConfig, validateConfig, sanitizeConfig } from './config';
 import { VMCreateConfig, ContainerCreateConfig } from '../types';
 import { getVersion } from '../utils/version';
 import {

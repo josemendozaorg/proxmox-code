@@ -6,7 +6,6 @@
 export { Logger } from './logger';
 export { Tracer } from './tracer';
 export { MetricsCollector, metrics } from './metrics';
-export { DiagnosticsCollector } from './diagnostics';
 
 export type {
   // Logger types
@@ -21,7 +20,4 @@ export type {
   // Metrics types
   PerformanceMetric,
   
-  // Diagnostics types
-  HealthStatus,
-  DiagnosticSnapshot
 } from './types';
