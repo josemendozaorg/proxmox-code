@@ -89,10 +89,10 @@
   "homepage": "https://proxmox-mpc.dev",
   "repository": {
     "type": "git",
-    "url": "https://github.com/proxmox-mpc/proxmox-mpc.git"
+    "url": "https://github.com/josemendozaorg/proxmox-code.git"
   },
   "bugs": {
-    "url": "https://github.com/proxmox-mpc/proxmox-mpc/issues"
+    "url": "https://github.com/josemendozaorg/proxmox-code/issues"
   },
   "engines": {
     "node": ">=18.0.0",
