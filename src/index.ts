@@ -34,22 +34,12 @@ export type {
 
 // Export API components
 export {
-  ProxmoxClient,
-  loadProxmoxConfig,
-  validateConfig,
-  sanitizeConfig
+  ProxmoxClient
 } from './api';
 
 // Export database components
 export {
   PrismaClient,
   DatabaseClient,
-  dbClient,
-  RepositoryFactory,
-  nodeRepository,
-  vmRepository,
-  containerRepository,
-  storageRepository,
-  taskRepository,
-  stateSnapshotRepository
+  dbClient
 } from './database';

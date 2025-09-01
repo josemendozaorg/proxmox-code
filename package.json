@@ -8,8 +8,6 @@
   },
   "scripts": {
     "build": "tsc",
-    "dev": "tsx watch src/console.ts",
-    "console": "tsx src/console.ts",
     "cli": "tsx src/cli.ts",
     "test": "jest",
     "test:watch": "jest --watch",

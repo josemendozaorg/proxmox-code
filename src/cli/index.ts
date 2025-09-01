@@ -5,8 +5,9 @@
  */
 
 import { Command } from 'commander';
+import dotenv from 'dotenv';
 
-import { ProxmoxClient, loadProxmoxConfig, validateConfig, sanitizeConfig } from '../api';
+import { ProxmoxClient } from '../api';
 import { VMCreateConfig, ContainerCreateConfig } from '../types';
 import { getVersion } from '../utils/version';
 import {
@@ -26,6 +27,54 @@ import {
   filterResources,
   processBatchOperation
 } from './utils';
+
+dotenv.config();
+
+interface ProxmoxConfig {
+  host: string;
+  port: number;
+  username: string;
+  password?: string;
+  token_id?: string;
+  token_secret?: string;
+  node: string;
+  verify_ssl: boolean;
+}
+
+function loadProxmoxConfig(): ProxmoxConfig {
+  return {
+    host: process.env.PROXMOX_HOST || 'localhost',
+    port: parseInt(process.env.PROXMOX_PORT || '8006'),
+    username: process.env.PROXMOX_USERNAME || 'root@pam',
+    password: process.env.PROXMOX_PASSWORD,
+    token_id: process.env.PROXMOX_TOKEN_ID,
+    token_secret: process.env.PROXMOX_TOKEN_SECRET,
+    node: process.env.PROXMOX_NODE || 'pve',
+    verify_ssl: process.env.NODE_ENV !== 'development'
+  };
+}
+
+function validateConfig(config: ProxmoxConfig): string[] {
+  const errors: string[] = [];
+  if (!config.host) errors.push('PROXMOX_HOST is required');
+  if (!config.username) errors.push('PROXMOX_USERNAME is required');
+  if (!config.password && (!config.token_id || !config.token_secret)) {
+    errors.push('Either PROXMOX_PASSWORD or both PROXMOX_TOKEN_ID and PROXMOX_TOKEN_SECRET are required');
+  }
+  return errors;
+}
+
+function sanitizeConfig(config: ProxmoxConfig): Record<string, any> {
+  return {
+    host: config.host,
+    port: config.port,
+    username: config.username,
+    node: config.node,
+    verify_ssl: config.verify_ssl,
+    has_password: !!config.password,
+    has_token: !!(config.token_id && config.token_secret)
+  };
+}
 
 const program = new Command();
 
