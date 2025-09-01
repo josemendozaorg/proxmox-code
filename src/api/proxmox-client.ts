@@ -31,14 +31,7 @@ import * as https from 'https';
 
 import axios, { AxiosInstance, AxiosError as _AxiosError } from 'axios';
 
-import { 
-  vmRepository, 
-  taskRepository, 
-  containerRepository,
-  type CreateVMInput, 
-  type CreateTaskInput,
-  type CreateContainerInput 
-} from '../database/repositories';
+// Database repositories removed following TDD cleanup
 import { Logger } from '../observability/logger';
 import { 
   ProxmoxConfig, 
@@ -408,47 +401,8 @@ export class ProxmoxClient {
       // Get task info
       const task = await this.getTaskStatus(node, upid);
       
-      // Save task to database
-      try {
-        await taskRepository.create({
-          upid: task.upid,
-          nodeId: node,
-          type: task.type,
-          status: task.status,
-          user: task.user,
-          startTime: new Date(task.starttime * 1000),
-          endTime: task.endtime ? new Date(task.endtime * 1000) : undefined,
-          exitStatus: task.exitstatus,
-          resourceId: config.vmid.toString()
-        });
-      } catch (dbError) {
-        this.logger.warn('Failed to save task to database after VM creation', {
-          workspace: 'vm-creation',
-          resourcesAffected: [config.vmid.toString()]
-        }, { error: dbError, operation: 'vm-creation', phase: 'task-save' });
-        // Continue execution - database error shouldn't fail VM creation
-      }
-
-      // Save VM to database (initial state)
-      try {
-        const vmData: CreateVMInput = {
-          id: config.vmid,
-          nodeId: node,
-          name: config.name,
-          status: 'stopped', // Initial status for new VMs
-          template: false,
-          cpuCores: config.cores,
-          memoryBytes: config.memory ? BigInt(config.memory * 1024 * 1024) : undefined // Convert MB to bytes
-        };
-
-        await vmRepository.create(vmData);
-      } catch (dbError) {
-        this.logger.warn('Failed to save VM to database after creation', {
-          workspace: 'vm-creation',
-          resourcesAffected: [config.vmid.toString()]
-        }, { error: dbError, operation: 'vm-creation', phase: 'vm-save' });
-        // Continue execution - database error shouldn't fail VM creation
-      }
+      // Database save operations removed following TDD cleanup
+      // VM creation task completed successfully
       
       return {
         upid,
@@ -680,47 +634,8 @@ export class ProxmoxClient {
       // Get task info
       const task = await this.getTaskStatus(node, upid);
       
-      // Save task to database
-      try {
-        await taskRepository.create({
-          upid: task.upid,
-          nodeId: node,
-          type: task.type,
-          status: task.status,
-          user: task.user,
-          startTime: new Date(task.starttime * 1000),
-          endTime: task.endtime ? new Date(task.endtime * 1000) : undefined,
-          exitStatus: task.exitstatus,
-          resourceId: config.vmid.toString()
-        });
-      } catch (dbError) {
-        this.logger.warn('Failed to save task to database after container creation', {
-          workspace: 'container-creation',
-          resourcesAffected: [config.vmid.toString()]
-        }, { error: dbError, operation: 'container-creation', phase: 'task-save' });
-        // Continue execution - database error shouldn't fail container creation
-      }
-
-      // Save container to database (initial state)
-      try {
-        const containerData: CreateContainerInput = {
-          id: config.vmid,
-          nodeId: node,
-          hostname: config.hostname,
-          status: 'stopped', // Initial status for new containers
-          template: false,
-          cpuCores: config.cores,
-          memoryBytes: config.memory ? BigInt(config.memory * 1024 * 1024) : undefined // Convert MB to bytes
-        };
-
-        await containerRepository.create(containerData);
-      } catch (dbError) {
-        this.logger.warn('Failed to save container to database after creation', {
-          workspace: 'container-creation',
-          resourcesAffected: [config.vmid.toString()]
-        }, { error: dbError, operation: 'container-creation', phase: 'container-save' });
-        // Continue execution - database error shouldn't fail container creation
-      }
+      // Database save operations removed following TDD cleanup
+      // Container creation task completed successfully
       
       return {
         upid,

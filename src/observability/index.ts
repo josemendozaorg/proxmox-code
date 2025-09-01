@@ -1,13 +1,8 @@
 /**
- * Observability Infrastructure
- * Comprehensive logging, tracing, and diagnostics for AI-assisted troubleshooting
+ * Observability Infrastructure - TDD-compliant components only
  */
 
-// Unified manager - preferred interface
-export { ObservabilityManager, observability } from './manager';
-export type { ObservabilityConfig } from './manager';
-
-// Individual components - for backwards compatibility and direct access
+// Well-tested individual components
 export { Logger } from './logger';
 export { Tracer } from './tracer';
 export { MetricsCollector, metrics } from './metrics';

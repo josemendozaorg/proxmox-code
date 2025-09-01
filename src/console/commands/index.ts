@@ -1,120 +1,12 @@
 /**
- * Slash Command Registry
- * Manages registration and execution of slash commands
+ * TDD-Compliant Command Registry
+ * Only includes tested components following TDD principles
  */
 
-import { ConsoleSession } from "../repl";
+// Export base command types
+export { BaseCommand, ICommand, executeCommand } from './base-command';
+export { StandardizedCommandRegistry } from './command-registry';
 
-import { AnonymizeCommand } from "./anonymize";
-import { ApplyCommand } from "./apply";
-import { DebugCommand } from "./debug";
-import { DestroyCommand } from "./destroy";
-import { ExitCommand } from "./exit";
-import { HealthCommand } from "./health";
-import { HelpCommand } from "./help";
-import { InitCommand } from "./init";
-import { LogsCommand } from "./logs";
-import { PlanCommand } from "./plan";
-import { PrivacyCommand } from "./privacy";
-import { ReportIssueCommand } from "./report-issue";
-import { StatusCommand } from "./status";
-import { SyncCommand } from "./sync";
-import { TestCommand } from "./test-command";
-import { ValidateCommand } from "./validate";
-
-export type SlashCommandHandler = (
-  args: string[],
-  session: ConsoleSession,
-) => Promise<void>;
-
-export class SlashCommandRegistry {
-  private commands = new Map<string, SlashCommandHandler>();
-
-  constructor() {
-    this.registerBuiltinCommands();
-  }
-
-  private registerBuiltinCommands(): void {
-    const helpCommand = new HelpCommand();
-    const initCommand = new InitCommand();
-    const statusCommand = new StatusCommand();
-    const syncCommand = new SyncCommand();
-    const testCommand = new TestCommand();
-    const applyCommand = new ApplyCommand();
-    const planCommand = new PlanCommand();
-    const validateCommand = new ValidateCommand();
-    const destroyCommand = new DestroyCommand();
-    const exitCommand = new ExitCommand();
-    const debugCommand = new DebugCommand();
-    const healthCommand = new HealthCommand();
-    const logsCommand = new LogsCommand();
-    const reportIssueCommand = new ReportIssueCommand();
-    const anonymizeCommand = new AnonymizeCommand();
-    const privacyCommand = new PrivacyCommand();
-
-    // Core commands
-    this.register("help", helpCommand.execute.bind(helpCommand));
-    this.register("init", initCommand.execute.bind(initCommand));
-    this.register("status", statusCommand.execute.bind(statusCommand));
-    this.register("sync", syncCommand.execute.bind(syncCommand));
-    this.register("test", testCommand.execute.bind(testCommand));
-    this.register("apply", applyCommand.execute.bind(applyCommand));
-    this.register("plan", planCommand.execute.bind(planCommand));
-    this.register("validate", validateCommand.execute.bind(validateCommand));
-    this.register("destroy", destroyCommand.execute.bind(destroyCommand));
-    this.register("exit", exitCommand.execute.bind(exitCommand));
-
-    // Observability commands
-    this.register("debug", debugCommand.execute.bind(debugCommand));
-    this.register("health", healthCommand.execute.bind(healthCommand));
-    this.register("logs", logsCommand.execute.bind(logsCommand));
-    this.register(
-      "report-issue",
-      reportIssueCommand.execute.bind(reportIssueCommand),
-    );
-
-    // Privacy & Anonymization commands
-    this.register("anonymize", anonymizeCommand.execute.bind(anonymizeCommand));
-    this.register("privacy", privacyCommand.execute.bind(privacyCommand));
-
-    // Aliases
-    this.register("quit", exitCommand.execute.bind(exitCommand));
-  }
-
-  /**
-   * Register a new slash command
-   */
-  register(name: string, handler: SlashCommandHandler): void {
-    this.commands.set(name, handler);
-  }
-
-  /**
-   * Check if a command exists
-   */
-  has(name: string): boolean {
-    return this.commands.has(name);
-  }
-
-  /**
-   * Execute a slash command
-   */
-  async execute(
-    name: string,
-    args: string[],
-    session: ConsoleSession,
-  ): Promise<void> {
-    const handler = this.commands.get(name);
-    if (!handler) {
-      throw new Error(`Unknown command: /${name}`);
-    }
-
-    await handler(args, session);
-  }
-
-  /**
-   * Get list of available commands
-   */
-  getAvailableCommands(): string[] {
-    return Array.from(this.commands.keys()).sort();
-  }
-}
+// Export tested commands
+export { NaturalLanguageProcessor } from './natural-language';
+export { ClaudeCodeIntegration } from './claude-code-integration';
